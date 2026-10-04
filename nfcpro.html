@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinayak Tailors Review</title>
+<style>
+  body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f8f9f6; color: #333; margin: 0; padding: 20px; display: flex; justify-content: center; }
+  .container { max-width: 400px; width: 100%; text-align: center; }
+  .logo { font-size: 24px; font-weight: bold; margin-bottom: 20px; letter-spacing: 1px; }
+  .lang-toggle { background: white; border: 1px solid #ddd; border-radius: 20px; display: inline-flex; overflow: hidden; margin-bottom: 20px; cursor: pointer;}
+  .lang-toggle span { padding: 8px 16px; font-size: 14px; }
+  .lang-toggle .active { background-color: #5d7b6f; color: white; }
+  h1 { font-size: 22px; margin: 10px 0 5px 0; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+  .stars { font-size: 40px; color: #ccc; margin-bottom: 20px; cursor: pointer; }
+  .section-title { font-size: 14px; color: #555; margin: 20px 0 10px 0; }
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 10px; }
+  .chip { background: white; border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+  .chip.active { background-color: #5d7b6f; color: white; border-color: #5d7b6f; }
+  .review-box-container { position: relative; margin-top: 30px; }
+  .review-label { position: absolute; top: -10px; left: 20px; background: white; padding: 2px 10px; font-size: 12px; color: #555; border-radius: 10px; border: 1px solid #ddd; }
+  .review-text { background: white; border: 1px solid #ddd; border-radius: 12px; padding: 25px 20px 20px 20px; text-align: left; font-size: 15px; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.02); width: 100%; box-sizing: border-box; font-family: inherit; resize: none; min-height: 140px; }
+  .review-text:focus { outline: none; border-color: #5d7b6f; }
+  .controls { display: flex; justify-content: space-between; font-size: 13px; color: #5d7b6f; margin: 15px 0; }
+  .controls span { cursor: pointer; text-decoration: underline; }
+  .footer-text { font-size: 12px; color: #888; margin-top: 15px; margin-bottom: 25px;}
+  .hidden { display: none !important; }
+  .private-feedback-text { font-size: 15px; color: #555; margin: 20px 0 15px 0; line-height: 1.5; }
+  .email-input { width: 100%; padding: 15px; margin-top: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; font-family: inherit; }
+  .email-input:focus { outline: none; border-color: #5d7b6f; }
+  .send-btn { background-color: #b3c2ba; color: white; padding: 15px; border-radius: 8px; border: none; width: 100%; font-size: 16px; cursor: pointer; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+  .google-btn { background-color: #5d7b6f; color: white; padding: 15px; border-radius: 8px; border: none; width: 100%; font-size: 16px; cursor: pointer; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">VINAYAK TAILORS</div>
+  
+  <div class="lang-toggle" id="languageToggle">
+    <span class="active" data-lang="english">English</span>
+    <span data-lang="hinglish">Hinglish</span>
+  </div>
+
+  <h1>How was your experience?</h1>
+  <div class="subtitle">Tap a star to get started</div>
+  
+  <div class="stars" id="starRating">
+    <span data-value="1">★</span><span data-value="2">★</span><span data-value="3">★</span><span data-value="4">★</span><span data-value="5">★</span>
+  </div>
+
+  <div id="mainReviewSection">
+      <div id="chipsSection">
+          <div class="section-title">What did you buy? (optional)</div>
+          <div class="chips" id="buyChips">
+            <div class="chip">Shirts</div>
+            <div class="chip">Pants</div>
+            <div class="chip">Suits / Blazer</div>
+            <div class="chip">Kurta Pajama</div>
+          </div>
+
+          <div class="section-title">What stood out? (optional)</div>
+          <div class="chips" id="featureChips">
+            <div class="chip">Quality</div>
+            <div class="chip">Design</div>
+            <div class="chip">Pricing</div>
+            <div class="chip">Fitting</div>
+          </div>
+      </div>
+
+      <div class="review-box-container">
+        <div class="review-label">Review</div>
+        <textarea class="review-text" id="reviewContent">Generating a fresh review for you... Please wait.</textarea>
+      </div>
+
+      <div class="controls">
+        <span id="generateBtn">↻ Not quite right? Generate another</span>
+        <span id="makeLongerBtn">Make it longer</span>
+      </div>
+
+      <button id="copyAndRedirectBtn" class="google-btn">
+        <span style="font-size: 18px;">⧉</span> Copy Review & Open Google Maps
+      </button>
+      <div class="footer-text">
+        Your review will be copied before Google Maps opens.<br>You choose what to submit.
+      </div>
+  </div>
+
+  <div id="privateFeedbackSection" class="hidden">
+      <div class="private-feedback-text">
+        Sorry to hear that. Tell us what went wrong — this goes privately to the owner, not to Google.
+      </div>
+      <textarea class="review-text" id="privateFeedbackText" placeholder="What happened?"></textarea>
+      <input type="email" id="customerEmail" class="email-input" placeholder="Email (optional, so they can reply to you)">
+      <button id="sendFeedbackBtn" class="send-btn">
+        <span style="font-size: 18px;">✈</span> Send feedback
+      </button>
+  </div>
+</div>
+
+<script>
+  let currentRating = 5; 
+  let currentLanguage = "english"; 
+  let apiTimeout; 
+
+  // AAPKI GROQ API KEY 
+  const apiKey = "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"; 
+  const directGoogleLink = "https://search.google.com/local/writereview?placeid=ChIJI63tNB8FfDkRwc5V2e-xjIU"; 
+
+  // --- SMART AI TRIGGER ---
+  function triggerAI(action = "normal", isInstant = false) {
+    if(!apiKey) return; 
+
+    clearTimeout(apiTimeout); 
+
+    if (isInstant) {
+        document.getElementById("reviewContent").value = "AI is writing a fast review... Please wait."; 
+        generateReview(action);
+    } else {
+        apiTimeout = setTimeout(() => {
+            document.getElementById("reviewContent").value = "Updating review based on selections..."; 
+            generateReview(action);
+        }, 1200); 
+    }
+  }
+
+  // --- Page load hote hi AI review generate karega ---
+  window.onload = function() {
+    triggerAI("normal", true);
+  };
+
+  // --- LANGUAGE TOGGLE LOGIC ---
+  const langOptions = document.querySelectorAll('#languageToggle span');
+  langOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      langOptions.forEach(opt => opt.classList.remove('active'));
+      option.classList.add('active');
+      currentLanguage = option.getAttribute('data-lang');
+      triggerAI("another", true); 
+    });
+  });
+
+  // --- STAR LOGIC ---
+  const stars = document.querySelectorAll('#starRating span');
+  const privateFeedbackSection = document.getElementById("privateFeedbackSection");
+  const chipsSection = document.getElementById("chipsSection");
+
+  stars.forEach((star, index) => {
+    star.addEventListener('click', () => {
+      currentRating = index + 1;
+      stars.forEach((s, i) => { s.style.color = i < currentRating ? "#e67e22" : "#ccc"; });
+
+      if (currentRating <= 3) {
+        privateFeedbackSection.classList.remove("hidden");
+        chipsSection.classList.add("hidden"); 
+      } else {
+        privateFeedbackSection.classList.add("hidden");
+        chipsSection.classList.remove("hidden");
+        triggerAI("normal", true);
+      }
+    });
+  });
+
+  stars.forEach(s => s.style.color = "#e67e22");
+
+  // --- CHIP LOGIC ---
+  const allChips = document.querySelectorAll('.chip');
+  allChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('active');
+      triggerAI("normal", false); 
+    });
+  });
+
+  // --- NAYA GROQ AI GENERATION LOGIC ---
+  async function generateReview(actionType) {
+    const reviewBox = document.getElementById("reviewContent");
+
+    const boughtItems = Array.from(document.querySelectorAll('#buyChips .chip.active')).map(c => c.innerText);
+    const featureItems = Array.from(document.querySelectorAll('#featureChips .chip.active')).map(c => c.innerText);
+
+    let prompt = `Write a Google map review from a customer for a tailor shop named 'Vinayak Tailors'. Rating: ${currentRating} out of 5 stars. `;
+    
+    if (currentLanguage === "hinglish") {
+      prompt += "Write the review entirely in Hinglish (Hindi language written in English alphabet). Example: 'Fitting bahut achi aayi aur delivery bhi time par mil gayi.' ";
+    } else {
+      prompt += "Write the review entirely in English. ";
+    }
+
+    if (boughtItems.length > 0) prompt += `The customer bought: ${boughtItems.join(', ')}. `;
+    if (featureItems.length > 0) prompt += `The customer liked these features: ${featureItems.join(', ')}. `;
+    
+    if (actionType === "longer") {
+      prompt += "Make it detailed, around 3-4 sentences long, natural, highly positive, and human-like.";
+    } else if (actionType === "another") {
+      prompt += "Write a fresh, new highly positive review. Make it 1-2 sentences short.";
+    } else {
+      prompt += "Make it short, concise, natural and human-like. Just 1 or 2 sentences.";
+    }
+
+    // Naya Groq API Endpoint
+    const groqApiUrl = `https://api.groq.com/openai/v1/chat/completions`;
+
+    try {
+      const response = await fetch(groqApiUrl, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}` 
+        },
+        body: JSON.stringify({ 
+model: "qwen/qwen3.8-27b",
+          messages: [
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.7 
+        })
+      });
+      
+      const data = await response.json();
+      
+      if(response.ok && data.choices && data.choices[0].message) {
+        reviewBox.value = data.choices[0].message.content.replace(/["*]/g, "").trim(); 
+      } else {
+        reviewBox.value = "AI Error: " + (data.error ? data.error.message : "Try again.");
+      }
+    } catch (error) {
+      reviewBox.value = "Connection error. Please check your internet.";
+    }
+  }
+
+  // --- BUTTON ACTIONS ---
+  document.getElementById("generateBtn").addEventListener("click", () => { triggerAI("another", true); });
+  document.getElementById("makeLongerBtn").addEventListener("click", () => { triggerAI("longer", true); });
+
+  document.getElementById("copyAndRedirectBtn").addEventListener("click", function() {
+    const reviewText = document.getElementById("reviewContent").value;
+    navigator.clipboard.writeText(reviewText).then(() => {
+        alert("Review copied! Paste it in the Google Maps window.");
+        window.open(directGoogleLink, "_blank"); 
+    });
+  });
+
+  document.getElementById("sendFeedbackBtn").addEventListener("click", function() {
+      const feedback = document.getElementById("privateFeedbackText").value;
+      if(feedback.trim() === "") { alert("Please write what happened before sending."); return; }
+      alert("Feedback Sent Privately! Thank you.");
+      document.getElementById("privateFeedbackText").value = "";
+      document.getElementById("customerEmail").value = "";
+  });
+</script>
+</body>
+</html>
